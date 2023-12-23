@@ -1,0 +1,11 @@
+.Edit {
+}
+
+input {
+  margin-top: 20px;
+  padding: 5px;
+}
+.ErrMsg {
+  color: red;
+  font-weight: bolder;
+}
