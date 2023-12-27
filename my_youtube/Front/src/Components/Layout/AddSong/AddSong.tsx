@@ -11,7 +11,6 @@ function AddSong(): JSX.Element {
   const apiKey = 'AIzaSyCrVV4Z7MrPNrwYCauxAwuWEY7A4HCZatU';
   const [songImg, setsongImg] = useState("");
   const [songName, setSongName] = useState("");
-  const [songArtist,setSongArtist] = useState("");
   const navigate = useNavigate();
 
   const { register, handleSubmit, formState: { errors } } = useForm<Song>();
