@@ -1,0 +1,17 @@
+/* AddSong.css */
+.songImg {
+    width: 150px;
+    height: auto;
+}
+
+/* AddSong.css */
+.AddSongBox {
+    display: inline-block;
+    border: 1px solid black;
+    padding: 7px;
+    margin: 6px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px;
+    background-color: rgb(226, 198, 235); /* הוסף את הצבע הלבן כרקע */
+    }
+

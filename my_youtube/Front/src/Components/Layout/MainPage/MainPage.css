@@ -1,0 +1,8 @@
+/* AddSong.css */
+.AddSong {
+    overflow-y: auto; /* או ניתן גם לשים scroll במקום auto */
+    max-height: 80vh; /* תן לאלמנט מקסימום גובה של 80% מגובה החלון */
+  }
+.Header{
+  color: white;
+}
