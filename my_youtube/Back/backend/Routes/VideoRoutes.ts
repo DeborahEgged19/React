@@ -2,13 +2,44 @@ import express, { NextFunction, Request, Response } from "express";
 
 const router = express.Router();
 
-//POST Method check
+//Add Video
 router.post(
-  "/checkOK",
+  "addVideo",
   async (request: Request, response: Response, next: NextFunction) => {
-    response.status(200).json(`{"msg":"OK"}`);
+    const body=request.body;
+    console.log("Request Body:",body)
+    response.status(201).json(`{"msg":"video was uploaded"}`);
   }
 );
+
+//DELETE method
+router.delete(
+  "deleteVideo/:id",
+  async (request: Request, response: Response, next: NextFunction) => {
+    const videoId=+request.params.id || null;
+    if(videoId === null ||videoId<1){
+      response.status(404).json(`{"msg":"video was deleted"}`);
+    }
+    console.log("deleting");
+    response.status(204);
+  }
+);
+
+//Get VideoList
+router.get(
+  "videoList",
+  async (request: Request, response: Response, next: NextFunction) => {
+    response.status(400).json(`{"msg":"Error"}`);
+  }
+);
+
+
+
+
+
+
+
+
 
 router.post(
   "/checkBAD",

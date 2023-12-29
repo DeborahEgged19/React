@@ -5,8 +5,8 @@ import express from "express";
 import fileUpload from "express-fileupload";
 import config from "./Utils/config";
 import ErrorHandler from "./MiddleWare/route-not-found";
-import { myBanner } from "./Utils/banner";
-import router from "./Routes/SimpleRouter";
+import router from "./Routes/VideoRoutes";
+import LoginRouter from "./Routes/LoginRoutes";
 
 //create server
 const server = express();
@@ -28,12 +28,12 @@ server.use(bodyParser.json());
 
 //how to use the routes
 //all categories (becuase of hila) => http://localhost:8080/api/v1/videos/newCat/catName
-server.use("/test", router);
+server.use("api/v1/videos/", router);
+server.use("api/v1/users/", LoginRouter);
 
 //handle errors (route not found)
 server.use("*", ErrorHandler);
 
-console.log(myBanner);
 
 //start the server
 server.listen(config.WebPort, () => {
