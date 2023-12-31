@@ -28,7 +28,7 @@ server.use(bodyParser.json());
 
 //how to use the routes
 //all categories (becuase of hila) => http://localhost:8080/api/v1/videos/newCat/catName
-server.use("api/v1/videos/", router);
+server.use("/videos", router);
 server.use("api/v1/users/", LoginRouter);
 
 //handle errors (route not found)

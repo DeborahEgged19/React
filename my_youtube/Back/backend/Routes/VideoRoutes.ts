@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
+import VideoLogic from "../Logic/VideoLogic";
 
 const router = express.Router();
 
@@ -33,64 +34,33 @@ router.get(
   }
 );
 
-
-
-
-
-
-
-
-
+//Get VideoList
 router.post(
-  "/checkBAD",
+  "/newCat/:catName",
   async (request: Request, response: Response, next: NextFunction) => {
-    response.status(400).json(`{"msg":"Error"}`);
-  }
-);
-
-//GET Method check
-router.get(
-  "/checkOK",
-  async (request: Request, response: Response, next: NextFunction) => {
-    response.status(200).json(`{"msg":"OK"}`);
+    console.log("in video routes");
+    //console.log(request.body);
+    //const catName = request.body.params.catName;
+    //console.log(catName);
+    //response.status(201).json( await VideoLogic.addCategory(request.params.catName));
   }
 );
 
 router.get(
-  "/checkBAD",
+  "/",
   async (request: Request, response: Response, next: NextFunction) => {
-    response.status(400).json(`{"msg":"Error"}`);
+    response.status(200).json("controlling!");
   }
 );
 
-//PUT Method check
-router.put(
-  "/checkOK",
-  async (request: Request, response: Response, next: NextFunction) => {
-    response.status(200).json(`{"msg":"OK"}`);
-  }
-);
 
-router.put(
-  "/checkBAD",
-  async (request: Request, response: Response, next: NextFunction) => {
-    response.status(400).json(`{"msg":"Error"}`);
-  }
-);
 
-//DELETE method
-router.delete(
-  "/checkOK",
-  async (request: Request, response: Response, next: NextFunction) => {
-    response.status(200).json(`{"msg":"OK"}`);
-  }
-);
 
-router.delete(
-  "/checkBAD",
-  async (request: Request, response: Response, next: NextFunction) => {
-    response.status(400).json(`{"msg":"Error"}`);
-  }
-);
+
+
+
+
+
+
 
 export default router;

@@ -1,15 +1,11 @@
 class Cat {
-     private categoryName: string[]=[];
-
-addCat = (newcategoryName:string)=>{
-    this.categoryName.push(newcategoryName)
-};
-allCat = () => {
-    return this.categoryName;
-};
-}
-
-let cat =new Cat();
-cat.addCat("General");
-
-export default cat;
+    public id: number;
+    public name: string;
+  
+    constructor(id: number, name: string) {
+      this.id = id;
+      this.name = name;
+    }
+  }
+  
+  export default Cat;
