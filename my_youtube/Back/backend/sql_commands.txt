@@ -30,22 +30,23 @@ CREATE TABLE `youtube`.`categories` (
 
 create songs table
 =========================================
-CREATE TABLE IF NOT EXISTS youtube.songs (
-  id INT NOT NULL AUTO_INCREMENT,
-  url VARCHAR(45) NOT NULL,
-  songName VARCHAR(45) NOT NULL,
-  songImg VARCHAR(45) NOT NULL,
-  category INT NOT NULL,
-  videoFile VARCHAR(45) NOT NULL,
-  PRIMARY KEY (id));
+CREATE TABLE `youtube`.`songs` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `description` VARCHAR(255) NULL,
+  `img` VARCHAR(255) NULL,
+  `title` VARCHAR(255) NULL,
+  `url` VARCHAR(255) NULL,
+  `videoFile` VARCHAR(255) NULL,
+  `category` INT NULL,
+  PRIMARY KEY (`id`));
+
 
 create category table
 ============================
-CREATE TABLE IF NOT EXISTS youtube.category (
-  id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(45) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE INDEX name_UNIQUE (name ASC) VISIBLE);
+CREATE TABLE `youtube`.`categories` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`));
 
 
 

@@ -1,66 +1,105 @@
+//הכרחי imports for our site.
+import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
+import fileUpload from "express-fileupload";
 import VideoLogic from "../Logic/VideoLogic";
+
+import dal_mysql from "../Utils/dal_mysql";
+
+//REST :
+//GET    => www.johnbryce.co.il/login/?user=zeev&password=12345                   => upto 256 char
+//POST   => www.johnbryce.co.il/login  + body {'user':'zeev','password':'12345'}  => upto 2gb
+//PUT    => like post but for update
+//DELETE => like GET but for delete
+
+//{}
+
+//{videoId,videoURL,videoTitle,videoDescription,videoFile}
+//addVideo    => POST   ✅
+//deleteVideo => DELETE
+//videoList   => GET
+//videoSearch => GET
+//videoUpdate => PUT
 
 const router = express.Router();
 
-//Add Video
 router.post(
-  "addVideo",
+  "/addVideo",
   async (request: Request, response: Response, next: NextFunction) => {
-    const body=request.body;
-    console.log("Request Body:",body)
-    response.status(201).json(`{"msg":"video was uploaded"}`);
+    //get the body, which represent our object
+    const newSong = request.body;
+    //send the command to mysql
+    const result = await VideoLogic.addSong(newSong);
+    //response to user
+    response.status(201).json(result);
   }
 );
 
-//DELETE method
+//delete song by id
 router.delete(
-  "deleteVideo/:id",
+  "/delete/:id",
   async (request: Request, response: Response, next: NextFunction) => {
-    const videoId=+request.params.id || null;
-    if(videoId === null ||videoId<1){
-      response.status(404).json(`{"msg":"video was deleted"}`);
-    }
-    console.log("deleting");
-    response.status(204);
+    const id = +request.params.id;
+    VideoLogic.deleteSong(id);
+    response.status(204).json();
   }
 );
 
-//Get VideoList
 router.get(
-  "videoList",
-  async (request: Request, response: Response, next: NextFunction) => {
-    response.status(400).json(`{"msg":"Error"}`);
-  }
-);
-
-//Get VideoList
-router.post(
   "/newCat/:catName",
   async (request: Request, response: Response, next: NextFunction) => {
-    console.log("in video routes");
-    //console.log(request.body);
-    //const catName = request.body.params.catName;
-    //console.log(catName);
-    //response.status(201).json( await VideoLogic.addCategory(request.params.catName));
+    // console.log("in video routes");
+    // console.log(request.params.catName);
+    //const catName = request.body["name"];
+    response
+      .status(201)
+      .json(await VideoLogic.addCategory(request.params.catName));
+  }
+);
+
+//get song by id
+router.get(
+  "/getSong/:id",
+  async (request: Request, response: Response, next: NextFunction) => {
+    response.status(200).json(await VideoLogic.getSongById(+request.params.id));
+  }
+);
+
+router.get(
+  "/all",
+  async (request: Request, response: Response, next: NextFunction) => {
+    response.status(202).json(await VideoLogic.getAllSongs());
+  }
+);
+
+// router.put(
+//   "/update",
+//   async (request: Request, response: Response, next: NextFunction) => {
+//    response.status(202).json(await VideoLogic.updateSong(request.body));
+//   }
+// );
+
+/////////////////////categories///////////////////////
+
+router.get(
+  "/allCat",
+  async (request: Request, response: Response, next: NextFunction) => {
+    response.status(200).json(await VideoLogic.getAllCategories());
+  }
+);
+
+router.delete(
+  "/deleteCat/:catID",
+  async (request: Request, response: Response, next: NextFunction) => {
+    response.status(201).json(VideoLogic.deleteCategory(+request.params.catID));
   }
 );
 
 router.get(
   "/",
   async (request: Request, response: Response, next: NextFunction) => {
-    response.status(200).json("controlling!");
+    response.status(200).json("Controller working !!!");
   }
 );
-
-
-
-
-
-
-
-
-
-
 
 export default router;

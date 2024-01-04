@@ -7,6 +7,7 @@ import config from "./Utils/config";
 import ErrorHandler from "./MiddleWare/route-not-found";
 import router from "./Routes/VideoRoutes";
 import LoginRouter from "./Routes/LoginRoutes";
+import VideoLogic from "./Logic/VideoLogic";
 
 //create server
 const server = express();
@@ -28,8 +29,14 @@ server.use(bodyParser.json());
 
 //how to use the routes
 //all categories (becuase of hila) => http://localhost:8080/api/v1/videos/newCat/catName
-server.use("/videos", router);
-server.use("api/v1/users/", LoginRouter);
+server.use("/api/1/videos", router);
+server.use("/api/v1/users", LoginRouter);
+
+//create our tables if they not exists
+console.log("table exists");
+VideoLogic.createSongsTable()
+VideoLogic.createCategoriesTable()
+
 
 //handle errors (route not found)
 server.use("*", ErrorHandler);

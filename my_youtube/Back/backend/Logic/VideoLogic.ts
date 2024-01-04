@@ -4,23 +4,22 @@ import Category from "../Models/Cat";
 import dal_mysql from "../Utils/dal_mysql";
 import { OkPacket } from "mysql";
 import { response } from "express";
-import Cat from "../Models/Cat";
 
 //add song, update song, delete song, getSongById, getAllSongs
 //add category, delete category, updateCategory, getAllCategory
 //one time running : create table songs, create table categories
 
-/*const addSong = async (newSong: Song) => {
+const addSong = async (newSong: Song) => {
   const SQLcommand = `
   INSERT INTO youtube.songs 
   (description,img,title,url,video_file,category) 
   VALUES 
   ('${newSong.description}','${newSong.img}','${newSong.title}','${newSong.url}','',0);
-  `;*/
+  `;
 
- // const result: OkPacket = await dal_mysql.execute(SQLcommand);
-  //return result.insertId;
-//};
+  const result: OkPacket = await dal_mysql.execute(SQLcommand);
+  return result.insertId;
+};
 
 // const updateSong = async (song: Song) => {
 //   const SQLcommands = `
@@ -89,7 +88,7 @@ const deleteCategory = (id: number) => {
   dal_mysql.execute(SQLcommand);
 };
 
-const updateCategory = (cat: Cat) => {};
+const updateCategory = (cat: Category) => {};
 
 const getAllCategories = async () => {
   const SQLcommand = `SELECT * FROM category`;
@@ -97,7 +96,7 @@ const getAllCategories = async () => {
 };
 
 export default {
-  //addSong,
+  addSong,
   //updateSong,
   deleteSong,
   getSongById,

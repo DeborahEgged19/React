@@ -17,7 +17,6 @@ const execute = (sql: string): Promise<any> => {
                 reject(err);
                 return;
             }
-
             //no error, maya can go to satla
             resolve(res);
         });
