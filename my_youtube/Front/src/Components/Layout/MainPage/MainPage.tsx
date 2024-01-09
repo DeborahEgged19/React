@@ -3,20 +3,21 @@ import "./MainPage.css";
 import Song from "../../../Model/Song";
 import { useNavigate } from "react-router-dom";
 import SingleSong from "../SingleSong/SingleSong";
+import axios from "axios";
 
 function MainPage(): JSX.Element {
-    //let songs:Song[]=[];
-    const [songs,setSongs]=useState<Song[]>([]);
-    //const navigate = useNavigate();
+  const [songs, setSongs] = useState([]);
+  useEffect(() => {
+  //localStorage
+  //setSongs(JSON.parse(localStorage.getItem("songs") as any))
+  //Backend
+  axios.get("http://localhost:4000/api/v1/videos/all").then((response) => {
+  console.log(response.data);
+  setSongs(response.data);
+  });
+  }, []);
 
-
-    useEffect(()=>{
-        setSongs(
-            localStorage.getItem("songs")
-            ? JSON.parse(localStorage.getItem("songs"))
-    :[]
-        );
-    },[]);
+  
     return (
         <div className="MainPage">
           <h1 className="Header">Main Page</h1>
@@ -28,7 +29,9 @@ function MainPage(): JSX.Element {
               {item.songName}
             </div>
           ))*/}
-          {songs.map(item=><SingleSong songID={item.url.split("=")[1]} songIMG={item.songImg} songTitle={item.songName} />)}
+          {songs.map(item=><SingleSong songID={item.url.split("=")[1]} 
+          songIMG={item.img}
+          songTitle={item.title} />)}
         </div>
       );
 }

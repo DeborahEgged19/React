@@ -12,9 +12,9 @@ import { response } from "express";
 const addSong = async (newSong: Song) => {
   const SQLcommand = `
   INSERT INTO youtube.songs 
-  (description,img,title,url,video_file,category) 
+  (description,img,title,url,videoFile,category) 
   VALUES 
-  ('${newSong.description}','${newSong.img}','${newSong.title}','${newSong.url}','',0);
+  ('','${newSong.img}','${newSong.title}','${newSong.url}','',0);
   `;
 
   const result: OkPacket = await dal_mysql.execute(SQLcommand);

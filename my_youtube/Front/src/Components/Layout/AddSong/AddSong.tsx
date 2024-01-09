@@ -1,4 +1,4 @@
-import { Button, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+/*import { Button, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import "./AddSong.css";
 import cat from "../../../Model/Cat";
 import Song from "../../../Model/Song";
@@ -45,7 +45,7 @@ function AddSong(): JSX.Element {
       // await axios.post('http://localhost:8080/api/v1/videos/addSong', userData);
       // navigate('/');
 
-      songs=localStorage.getItem("songs")?JSON.parse(localStorage.getItem("songs")):[];
+      /*songs=localStorage.getItem("songs")?JSON.parse(localStorage.getItem("songs")):[];
       songs.push(userData);
       localStorage.setItem("songs", JSON.stringify(songs));
 
@@ -98,7 +98,79 @@ function AddSong(): JSX.Element {
   );
 }
 
-export default AddSong;
+export default AddSong;*/
 
 
+import { useState } from "react";
+import "./AddSongForm.css";
+import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
+import Song from "../../../Model/Song";
+
+
+function AddSongForm(): JSX.Element {
+  //demo song=> https://www.youtube.com/watch?v=Ggafij3sZ1g
+  const [songURL, setURL] = useState("");
+  const [songTitle, setTitle] = useState("");
+  const [songDesc, setDesc] = useState("");
+  const [songImg, setImage] = useState("");
+
+  const navigate = useNavigate();
+
+  const apiKey = "AIzaSyCrVV4Z7MrPNrwYCauxAwuWEY7A4HCZatU";
+  const apiURL = `https://www.googleapis.com/youtube/v3/videos?part=snippet&key=${apiKey}&id=`;
+  const searchSong = () => {
+    //console.log(songURL.split("=")[1]);
+    const songID = songURL.split("=")[1];
+    axios.get(apiURL + songID).then((response) => {
+      //console.log(response.data.items[0].snippet.title);
+      setTitle(response.data.items[0].snippet.channelTitle.replace("'", ""));
+      setDesc(response.data.items[0].snippet.title.replace("'", ""));
+      setImage(response.data.items[0].snippet.thumbnails.medium.url);
+    });
+  };
+
+  const addNewSong = () => {
+    let allSongs = JSON.parse(localStorage.getItem("songs") as any);
+    const newSong = new Song(songDesc, songImg, songTitle, songURL);
+    allSongs.push(newSong);
+    //save to local storage
+    //localStorage.setItem("songs",JSON.stringify(allSongs));
+
+    //send data to backend, for saving the information...
+    //youtube.dispatch(addSongAction(newSong));
+    //youtube.getState().songs.allSongs.push(newSong); => will not work with redux benefits (subscribe)
+    axios
+      .post("http://localhost:4000/api/v1/videos/addVideo", newSong)
+      .then((res) => navigate("/"));
+    //navigate("/");
+  };
+
+  return (
+    <div className="AddSongForm">
+      <h1>add new song</h1>
+      <hr />
+      <input
+        type="url"
+        onKeyUp={(args) => {
+          setURL(args.currentTarget.value);
+          // console.log("my songs",songURL);
+        }}
+      />
+      <input type="submit" value="search" onClick={searchSong} />
+      <hr />
+      <img src={songImg} />
+      <br />
+      <h2>{songTitle}</h2>
+      <br />
+      <hr />
+      <h3>{songDesc}</h3>
+      <br />
+      <hr />
+      <input type="submit" value="add song" onClick={addNewSong} />
+    </div>
+  );
+}
+
+export default AddSongForm;

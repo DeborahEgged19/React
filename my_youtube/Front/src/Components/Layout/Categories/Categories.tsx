@@ -1,6 +1,6 @@
 import { Button, ButtonGroup } from "@mui/material";
 import "./Categories.css";
-import cat from "../../../Model/Cat";
+import cat from "../../../Model/Category";
 import { useNavigate } from "react-router-dom";
 
 function Categories(): JSX.Element {

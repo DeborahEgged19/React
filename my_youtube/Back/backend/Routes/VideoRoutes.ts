@@ -23,6 +23,17 @@ import dal_mysql from "../Utils/dal_mysql";
 
 const router = express.Router();
 
+//delete song by id
+router.delete(
+  "/delete/:id",
+  async (request: Request, response: Response, next: NextFunction) => {
+    const id = +request.params.id;
+    VideoLogic.deleteSong(id);
+    response.status(204).json();
+  }
+);
+
+
 router.post(
   "/addVideo",
   async (request: Request, response: Response, next: NextFunction) => {
